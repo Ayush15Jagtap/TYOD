@@ -1,12 +1,16 @@
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("/");
+  const location = useLocation();
+  const [activeTab, setActiveTab] = useState(location.pathname);
+
+  useEffect(() => {
+    setActiveTab(location.pathname);
+  }, [location.pathname]);
 
   const handleClick = (path) => {
-    setActiveTab(path);
     navigate(path);
   };
 
@@ -18,11 +22,11 @@ export default function Navbar() {
       <div>
         <div className="flex items-center justify-center gap-2 mb-16 mt-4">
           <img src="tyod1.svg" alt="Logo" className="w-6 h-6" />
-          <h1 className="text-xl font-bold text-blue-600 tracking-wide">TYOD</h1>
+          <h1 className="text-xl font-bold text-blue-600 tracking-wide">BYOD</h1>
         </div>
 
         <div className="flex flex-col gap-3">
-          {/* My Files */}
+       
           <button
             onClick={() => handleClick("/")}
             className={`flex items-center gap-3 px-4 py-2 text-base transition-all duration-150 ${
@@ -39,7 +43,7 @@ export default function Navbar() {
             <span>My Files</span>
           </button>
 
-       
+          
           <button
             onClick={() => handleClick("/upload")}
             className={`flex items-center gap-3 px-4 py-2 text-base transition-all duration-150 ${
@@ -56,7 +60,6 @@ export default function Navbar() {
             <span>Upload Files</span>
           </button>
 
-          {/* Chat */}
           <button
             onClick={() => handleClick("/chat")}
             className={`flex items-center gap-3 px-4 py-2 text-base transition-all duration-150 ${

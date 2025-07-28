@@ -1,15 +1,17 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useContext } from "react";
+
 
 export default function Upload() {
   const [files, setFiles] = useState([]);
   const fileInputRef = useRef();
+  
 
   const handleFileUpload = (selectedFiles) => {
     const newFiles = Array.from(selectedFiles).map((file) => ({
       id: Date.now() + Math.random(),
       name: file.name,
-      fileBlob: URL.createObjectURL(file),
       category: "Prescribing Information",
+      date: new Date().toLocaleDateString(),
     }));
     setFiles((prev) => [...prev, ...newFiles]);
   };
@@ -39,8 +41,9 @@ export default function Upload() {
     setFiles(updated);
   };
 
+
   return (
-    <div className="p-6 w-full h-full flex flex-col">
+    <div className="p-6 w-full h-[100dvh] flex flex-col overflow-hidden">
       <h2 className="text-xl text-left font-semibold mb-4">Upload Files</h2>
 
       <div
@@ -48,33 +51,28 @@ export default function Upload() {
         onDrop={handleDrop}
         onDragOver={(e) => e.preventDefault()}
       >
-        <div className="flex flex-col justify-between items-center h-[120px]">
-          <div className="flex flex-col items-center gap-2">
-            <img src="plus.svg" alt="plus" className="w-6 h-6" />
-            <p className="font-medium">Drag and Drop</p>
-          </div>
-          <p className="text-xs text-gray-500">Max file size - 10 MB</p>
-        </div>
-      </div>
-
-      <div className="mt-4 flex justify-end">
-        <button
-          onClick={() => fileInputRef.current.click()}
-          className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm"
-        >
-          Select files from device
-        </button>
-        <input
+        <div onClick={() => fileInputRef.current.click()} className="flex flex-col justify-between items-center cursor-pointer h-[130px]">
+          <input
           type="file"
           multiple
           ref={fileInputRef}
           onChange={handleFileInput}
           className="hidden"
         />
+          <div className="flex flex-col items-center gap-2">
+            <img src="plus.svg"  alt="plus" className="w-6 h-6 mt-4 " />
+            <p className="text-black font-extrabold font-medium">
+              Drag and Drop
+            </p>
+          </div>
+          <p className="text-xs text-black">Max file size - 10 MB</p>
+        </div>
       </div>
 
-      <div className="rounded-xl bg-[#F6F9FC] p-4 mt-6 mb-10">
-        <div className="grid grid-cols-[2fr_1.5fr_1fr] font-semibold text-blue-600 text-sm mb-2">
+      
+
+      <div className="rounded-xl bg-[#F6F9FC] p-4 mt-6 mb-10 overflow-y-auto max-h-[260px]">
+        <div className="grid grid-cols-[2fr_1.5fr_1fr] font-semibold text-left text-blue-600 text-sm mb-2">
           <div>File Name</div>
           <div>
             Select Category <span className="text-red-500">*</span>
@@ -89,15 +87,13 @@ export default function Upload() {
               key={file.id}
               className="grid grid-cols-[2fr_1.5fr_1fr] items-center border-t-2 border-[#F5F7FB] py-3 text-sm"
             >
-              <div>
-                <a
-                  href={file.fileBlob}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-700 hover:underline"
+              <div className="flex ">
+                <h2
+                
+                  className="text-black "
                 >
                   {file.name}
-                </a>
+                </h2>
               </div>
 
               <select
@@ -124,11 +120,11 @@ export default function Upload() {
         )}
       </div>
 
-      {/* Upload Button fixed at bottom */}
-      <div className="mt-auto text-center flex items-center justify-center">
+      <div className="mt-auto pt-2 pb-4 flex items-center justify-center">
         <button
+          
           disabled={files.length === 0}
-          className="flex bg-gradient-to-r from-blue-600 to-blue-800 text-white px-3 py-2 mt-12 rounded-[9.18px] shadow-blue-500 hover:bg-blue-700 gap-[7.65px] text-md disabled:opacity-50"
+          className="flex bg-gradient-to-r from-blue-600 to-blue-800 text-white px-3 py-2 rounded-[9.18px] shadow-blue-500 hover:bg-blue-700 gap-[7.65px] text-md disabled:opacity-50"
         >
           Upload
           <img src="upload1.svg" alt="query" className="w-6 h-6" />
