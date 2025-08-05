@@ -20,7 +20,7 @@ export default function Navbar() {
       style={{ backgroundImage: "url('./nav1.svg')" }}
     >
       <div>
-        <div className="flex items-center justify-center gap-2 mb-16 mt-4">
+        <div className="flex items-center justify-center gap-2 mb-16 mt-1">
           <img src="tyod1.svg" alt="Logo" className="w-6 h-6" />
           <h1 className="text-xl font-bold text-blue-600 tracking-wide">BYOD</h1>
         </div>
@@ -78,7 +78,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Logout */}
+  
       <div className="flex items-center gap-3 text-gray-700 cursor-pointer px-4 mb-4">
         <img src="logout.svg" alt="Logout" className="w-5 h-5" />
         <span className="text-sm font-medium">Logout</span>
